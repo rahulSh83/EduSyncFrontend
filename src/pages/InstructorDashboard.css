@@ -1,0 +1,21 @@
+.metric-card {
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.metric-card:hover {
+    transform: scale(1.03);
+    background-color: #f8f9fa;
+}
+
+.scrollable-list {
+    max-height: 180px;
+    overflow-y: auto;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.scrollable-list li {
+    padding: 4px 0;
+    border-bottom: 1px solid #eaeaea;
+}
