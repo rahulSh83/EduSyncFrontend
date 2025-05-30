@@ -17,18 +17,38 @@ const AssessmentsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch all courses
-        const courseRes = await axios.get(`${API_URL}/CourseModels`);
-        setCourses(courseRes.data);
-
-        // Fetch all assessments
-        const assessmentRes = await axios.get(`${API_URL}/AssessmentModels`);
-        setAssessments(assessmentRes.data);
         if (isStudent) {
-          const enrollRes = await axios.get(
-            `${API_URL}/EnrollmentModels/student/${user.userId}`
-          );
+          const [courseRes, assessmentRes, enrollRes] = await Promise.all([
+            axios.get(`${API_URL}/CourseModels`),
+            axios.get(`${API_URL}/AssessmentModels`),
+            axios.get(`${API_URL}/EnrollmentModels/student/${user.userId}`),
+          ]);
+
+          setCourses(courseRes.data);
+          setAssessments(assessmentRes.data);
           setEnrolledCourses(enrollRes.data.map((e) => e.courseId));
+        } else {
+          // INSTRUCTOR: Fetch only their courses and related assessments
+          const [courseRes, assessmentRes] = await Promise.all([
+            axios.get(`${API_URL}/CourseModels/instructor/${user.userId}`),
+            axios.get(`${API_URL}/AssessmentModels/instructor/${user.userId}`),
+          ]);
+
+          setCourses(courseRes.data);
+          setAssessments(assessmentRes.data);
+          // Fetch all courses
+          // const courseRes = await axios.get(`${API_URL}/CourseModels`);
+          // setCourses(courseRes.data);
+
+          // // Fetch all assessments
+          // const assessmentRes = await axios.get(`${API_URL}/AssessmentModels`);
+          // setAssessments(assessmentRes.data);
+          // if (isStudent) {
+          //   const enrollRes = await axios.get(
+          //     `${API_URL}/EnrollmentModels/student/${user.userId}`
+          //   );
+          //   setEnrolledCourses(enrollRes.data.map((e) => e.courseId));
+          // }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -36,20 +56,22 @@ const AssessmentsPage = () => {
     };
 
     fetchData();
-  }, [isStudent, user.UserId]);
+  }, [isStudent, user.userId]);
 
   const handleDeleteAssessment = async (assessmentId) => {
-        if (window.confirm("Delete this assessment?")) {
-          try {
-            await axios.delete(`${API_URL}/AssessmentModels/${assessmentId}`);
-            alert("Assessment deleted");
-            setAssessments(prev => prev.filter(a => a.assessmentId !== assessmentId));
-          } catch (err) {
-            console.error("Delete failed:", err);
-            alert("Could not delete assessment");
-          }
-        }
-      };
+    if (window.confirm("Delete this assessment?")) {
+      try {
+        await axios.delete(`${API_URL}/AssessmentModels/${assessmentId}`);
+        alert("Assessment deleted");
+        setAssessments((prev) =>
+          prev.filter((a) => a.assessmentId !== assessmentId)
+        );
+      } catch (err) {
+        console.error("Delete failed:", err);
+        alert("Could not delete assessment");
+      }
+    }
+  };
 
   // Filter for student: only enrolled course assessments
   const filteredCourses = isStudent
@@ -87,7 +109,7 @@ const AssessmentsPage = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>
           {isStudent
-            ? " Available assessments of Enrolled Courses:"
+            ? "Available assessments of Enrolled Courses:"
             : "All Assessments by Courses"}
         </h2>
         {!isStudent && (

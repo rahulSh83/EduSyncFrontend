@@ -37,7 +37,9 @@ const InstructorResultPage = () => {
   useEffect(() => {
     const fetchAssessments = async () => {
       try {
-        const res = await axios.get(`${API_URL}/AssessmentModels`);
+        const res = await axios.get(`${API_URL}/AssessmentModels`, {
+          params: { instructorId: user.userId },
+        });
         let filtered;
         if (selectedCourseId === "all") {
           filtered = res.data; // all assessments from all courses
@@ -63,7 +65,9 @@ const InstructorResultPage = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const res = await axios.get(`${API_URL}/ResultModels`);
+        const res = await axios.get(`${API_URL}/ResultModels`, {
+          params: { instructorId: user.userId },
+        });
         let filtered;
         if (selectedAssessmentId === "all") {
           // If "all assessments" selected

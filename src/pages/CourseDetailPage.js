@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getAssessmentsByCourse } from "../services/assessmentService";
-import { getResultByUserAndAssessment } from "../services/resultService";
 import axios from "axios";
 // import { Link, useNavigate } from "react-router-dom";
 
@@ -81,6 +79,43 @@ const CourseDetailPage = () => {
     // fetchAssessments();
   }, [courseId, user]);
 
+  
+  const handleDownload = async (fullPath) => {
+    try {
+      // Extract just the filename (after last slash)
+      const filename = fullPath.split("/").pop();
+
+      const res = await axios.get(
+        `${API_URL}/SasToken/download?filename=${encodeURIComponent(filename)}`
+      );
+
+      // window.open(res.data.downloadUrl, "_blank");
+      const fileUrl = res.data.downloadUrl;
+
+      // Fetch the blob from Azure
+      const blobRes = await axios.get(fileUrl, {
+        responseType: "blob",
+      });
+
+      // Create a blob URL
+      const blobUrl = window.URL.createObjectURL(new Blob([blobRes.data]));
+
+      // Create a temporary <a> element to trigger download
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      link.remove();
+      window.URL.revokeObjectURL(blobUrl);
+    
+    } catch (err) {
+      console.error("Failed to get download link", err);
+      alert("Download failed. Please try again.");
+    }
+  };
   // const fetchAssessments = async () => {
   //   try {
   //     const res = await axios.get(`${API_URL}/AssessmentModels`);
@@ -148,14 +183,12 @@ const CourseDetailPage = () => {
           {course.mediaUrl && (
             <div className="mb-3">
               <h5 className="fw-semibold text-secondary">Media URL</h5>
-              <a
-                href={course.mediaUrl}
-                className="text-decoration-none"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                className="btn btn-outline-primary"
+                onClick={() => handleDownload(course.mediaUrl)}
               >
                 {course.mediaUrl}
-              </a>
+              </button>
             </div>
           )}
 

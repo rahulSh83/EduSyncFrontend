@@ -49,6 +49,36 @@ const CreateCoursePage = () => {
     }
   };
 
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const res = await axios.get(
+        `${API_URL}/SasToken/generate`,{params: { filename: file.name },
+      });
+      const { uploadUrl, blobUrl } = res.data;
+
+      // Upload file directly to Azure Blob
+      await axios.put(uploadUrl, file, {
+        headers: {
+          "x-ms-blob-type": "BlockBlob",
+          "Content-Type": file.type,
+        },
+      });
+
+      setMediaUrl(blobUrl); // Save the public blob URL
+      console.log("Upload URL:", uploadUrl);
+      console.log("Blob URL:", blobUrl);
+    } catch (error) {
+      console.error("Upload failed", error);
+      setError("Failed to upload file to Azure");
+    }
+    
+  };
+
+  
+
   return (
     <div
       className="d-flex justify-content-center align-items-center"
@@ -99,6 +129,19 @@ const CreateCoursePage = () => {
               value={mediaUrl}
               onChange={(e) => setMediaUrl(e.target.value)}
               placeholder="https://example.com/video.mp4"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="file" className="form-label">
+              Upload Course File (PDF, MP4, etc.)
+            </label>
+            <input
+              type="file"
+              className="form-control"
+              onChange={handleFileUpload}
+              accept=".pdf,.mp4,.docx,.pptx"
               required
             />
           </div>

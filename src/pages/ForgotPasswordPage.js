@@ -12,13 +12,27 @@ const ForgotPasswordPage = () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/auth/forgot-password`,
-        { email }
+        { email, newPassword}
       );
       setMessage(response.data.message);
       setError("");
     } catch (err) {
+      console.error("Error resetting password:", err);
+
+      const errorData = err.response?.data;
+
+      let errorMsg = "Something went wrong";
+      if (typeof errorData === "string") {
+        errorMsg = errorData;
+      } else if (errorData?.title) {
+        errorMsg = errorData.title;
+      } else if (errorData?.errors) {
+        const firstKey = Object.keys(errorData.errors)[0];
+        errorMsg = errorData.errors[firstKey][0];
+      }
+
       setMessage("");
-      setError(err.response?.data || "Something went wrong");
+      setError(errorMsg);
     }
   };
 
