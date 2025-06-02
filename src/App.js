@@ -16,7 +16,7 @@ import ReviewResultsPage from './pages/ReviewResultsPage';
 import EditCoursePage from './pages/EditCoursePage';
 import EditAssessmentPage from './pages/EditAssessmentPage';
 import ViewAssessmentPage from './pages/ViewAssessmentPage';
-import ForgotPasswordPage from './pages/ForgotPasswordPage';
+// import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import StudentDashboard from './pages/StudentDashboard';
 import InstructorDashboard from './pages/InstructorDashboard';
 import Header from './components/Header';
@@ -50,7 +50,7 @@ function App() {
         <Route path="/assessments/view/:assessmentId" element={<ViewAssessmentPage />} />
         <Route path="/assessments/attempt/:assessmentId" element={<AttemptAssessmentPage />} />
         <Route path="/results/review/:assessmentId" element={<ReviewResultsPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        // <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
         <Route path="/result" element={<ResultPage />} />

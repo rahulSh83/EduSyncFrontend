@@ -9,8 +9,6 @@
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-
-//     console.log("API Base URL:", process.env.REACT_APP_API_BASE_URL);
 //     try {
 //       const response = await axios.post(
 //         `${process.env.REACT_APP_API_BASE_URL}/auth/forgot-password`,
