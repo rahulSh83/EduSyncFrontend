@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
 
 const LoginPage = () => {
@@ -82,9 +82,9 @@ const LoginPage = () => {
 
         {/* Register prompt */}
         <div className="text-center mt-3">
-          // <p>
-          //   Forgot your password? <a href="/forgot-password">Reset it here</a>
-          // </p>
+           {/* <p>
+             Forgot your password? <a href="/forgot-password">Reset it here</a>
+           </p> */}
           <p>
             Don't have an account? <a href="/register">Register</a>
           </p>
