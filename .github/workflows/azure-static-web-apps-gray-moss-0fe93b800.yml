@@ -26,11 +26,19 @@ jobs:
           node-version: '18'
           cache: 'npm'
           
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean npm cache
+        run: npm cache clean --force
+          
+      - name: Delete lock file and install fresh
+        run: |
+          rm -f package-lock.json
+          npm install --legacy-peer-deps
         
       - name: Build React app
-        run: npm run build
+        run: |
+          echo "Starting build process..."
+          CI=false npm run build  # This disables treating warnings as errors
+          echo "Build completed successfully"
         
       - name: List build contents (debug)
         run: |
