@@ -17,8 +17,3 @@ export const getPerformanceReports = async (userId) => {
   const res = await axios.get(`${API}/ResultModels/student/${userId}/results`);
   return res.data;
 };
-
-// export const getAvailableAssessments = async (userId) => {
-//   const res = await axios.get(`${API}/AssessmentModels/${userId}`);
-//   return res.data;
-// };

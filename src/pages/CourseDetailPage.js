@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { Link, useNavigate } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -14,41 +13,6 @@ const CourseDetailPage = () => {
   // const [results, setResults] = useState({});
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-
-  // useEffect(() => {
-  //   const fetchCourse = async () => {
-  //     try {
-  //       const res = await axios.get(`${API_URL}/CourseModels/${courseId}`);
-  //       setCourse(res.data);
-  //     } catch (err) {
-  //       console.error('Failed to fetch course', err);
-  //     }
-  //   };
-
-  //   fetchCourse();
-  // }, [courseId]);
-
-  // useEffect(() => {
-  //   const fetchAssessmentsAndResults = async () => {
-  //     try {
-  //       const assmts = await getAssessmentsByCourse(courseId);
-  //       setAssessments(assmts);
-
-  //       if (user && user.role === 'Student') {
-  //         const resultsMap = {};
-  //         for (const a of assmts) {
-  //           const res = await getResultByUserAndAssessment(user.userId, a.assessmentId);
-  //           resultsMap[a.assessmentId] = res.length ? res[0] : null;
-  //         }
-  //         setResults(resultsMap);
-  //       }
-  //     } catch (err) {
-  //       console.error('Failed to fetch assessments or results', err);
-  //     }
-  //   };
-
-  //   fetchAssessmentsAndResults();
-  // }, [courseId, user]);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -116,32 +80,6 @@ const CourseDetailPage = () => {
       alert("Download failed. Please try again.");
     }
   };
-  // const fetchAssessments = async () => {
-  //   try {
-  //     const res = await axios.get(`${API_URL}/AssessmentModels`);
-  //     const filtered = res.data.filter((a) => a.courseId === courseId);
-  //     setAssessments(filtered);
-  //   } catch (err) {
-  //     console.error("Failed to load assessments:", err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const checkEnrollment = async () => {
-  //     try {
-  //       const response = await axios.get(`${API_URL}/EnrollmentModels`);
-  //       const enrollments = response.data;
-  //       const enrolled = enrollments.some(
-  //         (e) => e.userId === user.userId && e.courseId === courseId
-  //       );
-  //       setIsEnrolled(enrolled);
-  //     } catch (error) {
-  //       console.error("Failed to check enrollment status:", error);
-  //     }
-  //   };
-
-  //   checkEnrollment();
-  // }, [user.userId, courseId]);
 
   if (loading) return <div className="container mt-5">Loading course...</div>;
 
@@ -208,69 +146,4 @@ const CourseDetailPage = () => {
 
 export default CourseDetailPage;
 
-// import React, { useEffect, useState } from 'react';
-// import { useParams, Link } from 'react-router-dom';
-// import axios from 'axios';
 
-// const API_URL = process.env.REACT_APP_API_BASE_URL;
-
-// const CourseDetailPage = () => {
-//   const { courseId } = useParams();
-//   const [course, setCourse] = useState(null);
-//   const [assessments, setAssessments] = useState([]);
-
-//   useEffect(() => {
-//     const fetchCourse = async () => {
-//       try {
-//         const res = await axios.get(`${API_URL}/CourseModels/${courseId}`);
-//         setCourse(res.data);
-//       } catch (err) {
-//         console.error('Failed to load course:', err);
-//       }
-//     };
-
-//     const fetchAssessments = async () => {
-//       try {
-//         const res = await axios.get(`${API_URL}/AssessmentModels`);
-//         const filtered = res.data.filter(a => a.courseId === courseId);
-//         setAssessments(filtered);
-//       } catch (err) {
-//         console.error('Failed to load assessments:', err);
-//       }
-//     };
-
-//     fetchCourse();
-//     fetchAssessments();
-//   }, [courseId]);
-
-//   return (
-//     <div>
-//       {course ? (
-//         <>
-//           <h2>{course.title}</h2>
-//           <p>{course.description}</p>
-
-//           <h4>Assessments</h4>
-//           {assessments.length === 0 ? (
-//             <p>No assessments available for this course.</p>
-//           ) : (
-//             <ul>
-//               {assessments.map(a => (
-//                 <li key={a.assessmentId}>
-//                   {a.title} – Max Score: {a.maxScore}
-//                   <Link to={`/assessments/attempt/${a.assessmentId}`} className="btn btn-sm btn-outline-primary ms-2">
-//                     Attempt
-//                   </Link>
-//                 </li>
-//               ))}
-//             </ul>
-//           )}
-//         </>
-//       ) : (
-//         <p>Loading course...</p>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default CourseDetailPage;

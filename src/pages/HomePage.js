@@ -2,20 +2,6 @@ import React from 'react';
 // import { Link } from 'react-router-dom';
 
 const HomePage = () => (
-  // <div className="container-fluid p-0">
-
-  //   {/* Main content */}
-  //   <div className="container mt-5 text-center">
-  //     <h1 className="display-4 mb-3">Welcome to EduSync LMS</h1>
-  //     <p className="lead">
-  //       EduSync is your smart solution for learning management. Whether you're a student or an instructor,
-  //       EduSync empowers you with tools to learn, teach, manage courses, and collaborate effortlessly.
-  //     </p>
-  //     <p>
-  //       Get started by creating an account or logging in to access your dashboard, manage your courses, and more!
-  //     </p>
-  //   </div>
-
   <div className="bg-light min-vh-100 d-flex flex-column justify-content-center align-items-center text-center px-3">
     {/* Hero Section */}
     <div className="mb-5">
@@ -28,14 +14,6 @@ const HomePage = () => (
         Whether you're a student or an instructor, EduSync empowers you with
         tools to learn, teach, manage courses, and collaborate effortlessly.
       </p>
-      {/* <div className="d-flex justify-content-center gap-3">
-        <Link to="/register" className="btn btn-primary btn-lg px-4">
-          Get Started
-        </Link>
-        <Link to="/login" className="btn btn-outline-primary btn-lg px-4">
-          Login
-        </Link>
-      </div> */}
     </div>
 
     {/* Features Section */}
