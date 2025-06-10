@@ -16,6 +16,10 @@ const Header = () => {
     setMenuOpen((prev) => !prev);
   };
 
+  const handleHomeClick = () => {
+    navigate("/");
+  };
+
   useEffect(() => {
     setMenuOpen(false); // Force dropdown closed on route change
   }, [location]);
@@ -35,7 +39,13 @@ const Header = () => {
         <div style={{ width: "100px" }}></div>
 
         {/* Center logo */}
-        <span className="navbar-brand mx-auto fs-3">EduSync LMS</span>
+        <span
+          className="navbar-brand mx-auto fs-3"
+          onClick={handleHomeClick}
+          style={{ cursor: "pointer" }}
+        >
+          EduSync LMS
+        </span>
 
         {/* Right menu */}
         {user && (
